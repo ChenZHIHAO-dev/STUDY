@@ -1,0 +1,160 @@
+# 列表
+# 3.1序列 {列表（可修改，存放类型不限） 元组（不可修改，存放类型不限） 字符串（不可修改，只能存字符串）}
+# 3.1.1索引（indexing）
+# indexing
+greeting = 'Hello world!'       # 字符串是一个由字符组成的序列
+print(greeting[0])              # 索引0 指向第一个元素  ‘H’
+print(greeting[6])              # 索引6 指向第7个元素   ‘w’
+print(greeting[-3])              # 索引-3 指向第10个元素（倒数第三元素）  ‘l’
+print(greeting[-1])              # 索引-1 指向第12个元素(最后一个元素)   ‘！’
+# 字符串不可修改   因此  greeting[1] = 'a'  这样的操作非法的
+# 正向索引  0 1 2 3 ..... （位置编号规则 和 c语言中的数组一样）
+# 负向索引   ......-3 -2 -1   （从右向左 最后一个元素位置编号为 -1）
+
+# str1='abcd'
+# rint(str1['a'])  #  TypeError: string indices must be integers    i不是整数    
+# print(str1[5])    #  IndentationError: unexpected indent          越界
+
+# 索引越界将会导致 IndexError;  如果不是整数将会导致TypeError
+
+# 3.1.2切片（slicing）
+# slicing
+num = [1,2,3,4,5,6,7,8,9,10]
+print(num[3:6])
+#  得到[4, 5, 6]，从位置编号3开始到位置编号6  但不包括6！
+print(num[1:6:2])
+#  得到[2, 4, 6]，  s[i:j:k]其中i起始位置 j终止位置 k为步长
+
+num2 = list(range(1,11))
+print(num2)
+#  num2 为  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(num2[8:3:-1])
+#  [9, 8, 7, 6, 5] 从位置编号为9开始 向右（负号代表向右） 步长为 1  不包括位置编号为3的元素
+print(num2[10:0:-1])
+#  [10, 9, 8, 7, 6, 5, 4, 3, 2]  元素10的位置编号为9  索引10大于最大位置编号的大小   又-1  向右
+print(num2[::-2])
+# [10, 8, 6, 4, 2]
+print(num2[7::-2])
+# [8, 6, 4, 2]
+print(num2[:7:-2])
+# [10]
+print(num2[:7])
+# [1, 2, 3, 4, 5, 6, 7]
+print(num2[:7:-1])
+# [10, 9]
+print(num2[8:1])
+# []  左边 的索引比右边的晚出现 结果为空序列
+print(num2[-3:-5])
+# []  左边 的索引比右边的晚出现 结果为空序列
+
+#对于列表 可以进行赋值 修改
+num3=['a','b',1,3,'c']
+num3[:3] = 'a'
+print(num3)
+# ['a',3,'c']  将['a','b',1] 用 ['a'] 替代了
+# del也可以删除切片对于的元素
+del num3[:2]
+print(num3)
+# ['c']     ['a',3]被删除
+# 除提到的del外 对序列索引或分片的时候原序列不变
+
+# 3.2 序列相加  s1 + s2 形成一个新序列对象
+# 其中 连接操作符也支持符合赋值运算，即 +=   例如 s1 += s2
+# 两个相同类型的序列才能进行连接操作
+print([1,2,3]+[4,5,6])          #[1, 2, 3, 4, 5, 6]
+# print([1,2,3]+'hello world!')  错误
+
+#3.2.1 序列重复    s*n 或者  n*s
+lst1 = [1,2]
+lst2 = ['a','b']
+str1 = 'chenzhi'
+print(2*lst1)                   # [1, 2, 1, 2]
+print(str1*3)                   # chenzhichenzhichenzhi
+
+print('python'*3)
+
+# 空列表[]   None是python 中的内置值value
+sequence = []
+sequence1 = [None] *10
+print(sequence)                 # []
+print(sequence1)             
+# [None, None, None, None, None, None, None, None, None, None]
+
+# 3.2.2 成员资格
+s1=[1,2,3,4]
+print(1 in s1)                  # True
+print(5 not in s1)              # True
+print(s1.count(4))              # 1   count 计数 计算 元素4 在序列中出现的次数
+print(s1.count(5))              # 0
+print(s1.index(3))              # 第一次出现 元素3  的位置是   2
+
+# print(s1.index(3,0,2))
+# 在范围 [0:2]内寻找
+# print(s1.index(3,0,2))        # 在范围 [0:2]内寻找  不包括位置坐标2
+# ValueError: 3 is not in list
+print(s1.index(3,0,3))
+#  在范围 [0:3]内寻找 第一次出现 元素3  的位置是   2
+
+# 3.2.3  序列比较  类似于 c语言中 字符串比较 strcmp
+s1=[1,2,3,4]
+s2=[2,3,4]
+str1=['a','b','c']
+str2=['c','b']
+str3=['c','a','1']
+t1=(1,2,3)
+t2=(2,1)
+t3=('a','b')
+t4=('c',)
+print(s1>s2)                         # False
+print(str1>str2)                     # False
+print(str3>str2)                     # False
+print(t1>t2)                         # False
+print(t3>t4)                         # False
+
+# 3.2.4 序列排序   内置函数sorted()
+# sorted(iterable,key=None,reverse = False)  默认 不写时为False 升序  key 是用来计算比较键值的函数
+s3='abAC'
+print(sorted(s3,key=str.lower))
+# ['a', 'A', 'b', 'C']  比较时 函数str.lower先将大写字母转化为小写字母 再比较，由于‘A’ 的位置本来就在'a'的后面
+
+"""
+1. `s3` is the string `'abAC'`.
+
+2. The `sorted()` function is called with `s3` as the iterable and `key=str.lower` as the key function. 
+The `str.lower` function is used as the key function to convert each character to lowercase before comparison.
+
+3. During the sorting process, the `sorted()` function applies the `str.lower` key function to each character in `s3`. 
+This converts all the characters to lowercase.
+
+4. The sorted comparison is then performed based on the lowercase versions of the characters. 
+Since lowercase letters have a lower ASCII value than their corresponding uppercase letters, 
+the characters are sorted in the following order: lowercase `'a'`, uppercase `'A'`, 
+lowercase `'b'`, and uppercase `'C'`.
+
+5. Finally, the `sorted()` function returns a new list with the characters sorted according to the comparison result. 
+Therefore, the resulting list is `['a', 'A', 'b', 'C']`,
+ where the lowercase `'a'` comes first,followed by the uppercase `'A'`, lowercase `'b'`, and uppercase `'C'`.
+
+By using the `str.lower` key function, you achieve a case-insensitive sorting order 
+where lowercase and uppercase versions of the same letter are considered equal.
+"""
+
+# 3.2.5长度、最大值、最小值
+# 内置函数 len() 、 min() 和 max()
+s1=[1,2,3,4]
+
+print(len(s1))                  # len(s1)=4
+print(max(s1))                  # max(s1)=4
+print(min(s1))                  # min(s1)=1
+print(sum(s1))
+# sum(s1)=10
+
+s2=[1,'a',3]
+print(len(s2))                  # len(s1)=3
+
+# print(sum(s2))
+# TypeError: unsupported operand type(s) for +: 'int' and 'str'
+s3='abc'
+# print(sum(s3))
+# TypeError: unsupported operand type(s) for +: 'int' and 'str'
+#  能相加的序列只能是 list列表 或 tuple元组  而且其中的元素必须是数值！！！
